@@ -1,28 +1,27 @@
 package org.example;
 
+import org.example.components.FigureColor;
+import org.example.components.FigureType;
+import org.example.components.Position;
+import org.example.exceptions.KingIsHackedException;
+import org.example.exceptions.NoMoreMovesException;
 import org.example.figures.*;
 
 import java.util.*;
 
 public class Computer2 {
-
-    private List<Figure> computersBlackFigures = new ArrayList<>();
     private final Random random = new Random();
-    private ChessBoard chessBoard = new ChessBoard();
+    private List<Figure> computersBlackFigures = new ArrayList<>();
     private Set<Position> availableMoves = new HashSet<>();
-    private boolean gameOver = false;
 
     public Map<Position, Figure> takeTurn(Map<Position, Figure> board) {
         getBlackFigures(board);
-        if (getComputersBlackFigures().isEmpty()) {
-            throw new NoMoreFiguresException("No more figures");
-        }
+        System.out.println(getComputersBlackFigures().size());
         Figure chosenFigure = chooseAFigure(board);
-        System.out.println("getBlackFigures() = " + getComputersBlackFigures().size());
         setAvailableMoves(generateMoves(board, getAvailableMoves(), chosenFigure));
-        while ((getAvailableMoves().isEmpty())) {// !isGameOver()
-            if (getComputersBlackFigures().contains(FigureType.PAWN) && getAvailableMoves().isEmpty()) {
-                throw new NoMoreMovesException("No more moves");
+        while ((getAvailableMoves().isEmpty())) {
+            if (getComputersBlackFigures().size() <= 8) {
+                checkIfOnlyPawnsLeft();
             }
             chosenFigure = chooseAFigure(board);
             setAvailableMoves(generateMoves(board, getAvailableMoves(), chosenFigure));
@@ -39,7 +38,6 @@ public class Computer2 {
             chosenFigure.setPosition(chosenMove);
             board.put(chosenMove, chosenFigure);
             Figure figure = board.get(chosenMove);
-            System.out.println("figure.toString() = " + figure.toString() + "is hacked");
             if (figure.getFigureType() == FigureType.KING) {
                 throw new KingIsHackedException("King is hacked");
             }
@@ -50,10 +48,16 @@ public class Computer2 {
         return board;
     }
 
-    private Figure chooseAFigure(Map<Position, Figure> board) {
-        if (getComputersBlackFigures().isEmpty()) {
-            throw new NoMoreFiguresException("no more figures");
+    private List<Figure> getBlackFigures(Map<Position, Figure> board) {
+        for (Map.Entry<Position, Figure> entry : board.entrySet()) {
+            if (entry.getValue() != null && entry.getValue().getColor() == FigureColor.BLACK) {
+                computersBlackFigures.add(entry.getValue());
+            }
         }
+        return getComputersBlackFigures();
+    }
+
+    private Figure chooseAFigure(Map<Position, Figure> board) {
         return getComputersBlackFigures().get(random.nextInt(getComputersBlackFigures().size()));
     }
 
@@ -66,6 +70,18 @@ public class Computer2 {
                 .findAny().get();
     }
 
+    private void checkIfOnlyPawnsLeft() {
+        List<Figure> pawns = new ArrayList<>();
+        getComputersBlackFigures().forEach(figure -> {
+            if (figure.getFigureType() == FigureType.PAWN) {
+                pawns.add(figure);
+            }
+        });
+        if (getComputersBlackFigures().size() == pawns.size()) {
+            throw new NoMoreMovesException("Only pawns left - no more moves");
+        }
+    }
+
     private void clearAvailableMoves() {
         availableMoves.clear();
     }
@@ -76,15 +92,6 @@ public class Computer2 {
 
     private void setAvailableMoves(Set<Position> availableMoves) {
         this.availableMoves = availableMoves;
-    }
-
-    private List<Figure> getBlackFigures(Map<Position, Figure> board) {
-        for (Map.Entry<Position, Figure> entry : board.entrySet()) {
-            if (entry.getValue() != null && entry.getValue().getColor() == FigureColor.BLACK) {
-                computersBlackFigures.add(entry.getValue());
-            }
-        }
-        return getComputersBlackFigures();
     }
 
     public List<Figure> getComputersBlackFigures() {

@@ -1,8 +1,8 @@
 package org.example.figures;
 
-import org.example.FigureColor;
-import org.example.FigureType;
-import org.example.Position;
+import org.example.components.FigureColor;
+import org.example.components.FigureType;
+import org.example.components.Position;
 
 import java.util.*;
 
@@ -23,19 +23,6 @@ public abstract class Figure {
     public boolean shouldBreak(Map<Position, Figure> board, int x, int y) {
         return !isValidPosition(x, y) || isObstacle(board, x, y);
     }
-//    public boolean isObstacle(Map<Position, Figure> board, int x, int y, FigureColor color) {
-//        Position position = new Position((char) x, y);
-//        if (board.get(position) != null) {
-//            Figure figure = board.get(position);
-//            if (figure.getColor() == color) {
-//                return false;
-//            } else {
-//                return true;
-//            }
-//        } else {
-//            return false; // Фигура отсутствует
-//        }
-//    }
 
     public boolean isObstacle(Map<Position, Figure> board, int x, int y) {
         Position position = new Position((char) x, y);

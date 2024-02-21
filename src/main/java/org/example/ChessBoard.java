@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.components.FigureColor;
+import org.example.components.FigureType;
+import org.example.components.Position;
 import org.example.figures.*;
 
 import java.util.ArrayList;
@@ -71,8 +74,6 @@ public class ChessBoard {
             figures.add(new Pawn(FigureType.PAWN, FigureColor.BLACK, new Position(asisX[i], 7)));
         }
     }
-
-
 
     public void addFigureToBoard(Position position, Figure figure) {
         this.board.put(position, figure);

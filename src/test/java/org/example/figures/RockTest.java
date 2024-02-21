@@ -1,6 +1,10 @@
 package org.example.figures;
 
 import org.example.*;
+import org.example.ChessBoard;
+import org.example.components.FigureColor;
+import org.example.components.FigureType;
+import org.example.components.Position;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 

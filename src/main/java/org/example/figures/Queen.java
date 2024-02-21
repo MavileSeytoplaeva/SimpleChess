@@ -1,8 +1,8 @@
 package org.example.figures;
 
-import org.example.FigureColor;
-import org.example.FigureType;
-import org.example.Position;
+import org.example.components.FigureColor;
+import org.example.components.FigureType;
+import org.example.components.Position;
 
 import java.util.Map;
 import java.util.Set;
@@ -16,8 +16,8 @@ public class Queen extends Figure {
     @Override
     public Set<Position> generateMoves(Map<Position, Figure> board, Set<Position> availableMoves) {
         Position initialPosition = getPosition();
-        char positionOnAsisX = initialPosition.getHorizontalPosition();
-        int positionOnAsisY = initialPosition.getVerticalPosition();
+        char positionOnAsisX = initialPosition.horizontalPosition();
+        int positionOnAsisY = initialPosition.verticalPosition();
         setPreviousPosition(initialPosition);
         moveRightPositiveDiagonal(board, availableMoves, positionOnAsisX, positionOnAsisY);
         moveLeftPositiveDiagonal(board, availableMoves, positionOnAsisX, positionOnAsisY);

@@ -1,8 +1,8 @@
 package org.example.figures;
 
-import org.example.FigureColor;
-import org.example.FigureType;
-import org.example.Position;
+import org.example.components.FigureColor;
+import org.example.components.FigureType;
+import org.example.components.Position;
 
 import java.util.*;
 
@@ -15,8 +15,8 @@ public class Knight extends Figure {
     @Override
     public Set<Position> generateMoves(Map<Position, Figure> board, Set<Position> availableMoves) {
         Position initialPosition = getPosition();
-        char positionOnAsisX = initialPosition.getHorizontalPosition();
-        int positionOnAsisY = initialPosition.getVerticalPosition();
+        char positionOnAsisX = initialPosition.horizontalPosition();
+        int positionOnAsisY = initialPosition.verticalPosition();
         setPreviousPosition(initialPosition);
         moveStraightAndRight(board, availableMoves, positionOnAsisX, positionOnAsisY);
         moveStraightAndLeft(board, availableMoves, positionOnAsisX, positionOnAsisY);
@@ -37,10 +37,6 @@ public class Knight extends Figure {
         } else if (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
             addPositionToAvailableMoves(availableMoves, x, y);
         }
-//        if (isValidPosition(x, y) || isObstacle(board, x, y)) {
-//            addPositionToAvailableMoves(availableMoves, x, y);
-//        }
-
     }
 
     private void moveStraightAndLeft(Map<Position, Figure> board, Set<Position> availableMoves, int x, int y) {
@@ -51,9 +47,6 @@ public class Knight extends Figure {
         } else if (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
             addPositionToAvailableMoves(availableMoves, x, y);
         }
-//        if (isValidPosition(x, y) || isObstacle(board, x, y)) {
-//            addPositionToAvailableMoves(availableMoves, x, y);
-//        }
     }
 
     private void moveBackAndRight(Map<Position, Figure> board, Set<Position> availableMoves, int x, int y) {
@@ -64,9 +57,6 @@ public class Knight extends Figure {
         } else if (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
             addPositionToAvailableMoves(availableMoves, x, y);
         }
-//        if (isValidPosition(x, y) || isObstacle(board, x, y)) {
-//            addPositionToAvailableMoves(availableMoves, x, y);
-//        }
     }
 
     private void moveBackAndLeft(Map<Position, Figure> board, Set<Position> availableMoves, int x, int y) {
@@ -77,9 +67,6 @@ public class Knight extends Figure {
         } else if (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
             addPositionToAvailableMoves(availableMoves, x, y);
         }
-//        if (isValidPosition(x, y) || isObstacle(board, x, y)) {
-//            addPositionToAvailableMoves(availableMoves, x, y);
-//        }
     }
 
     private void moveRightAndStraight(Map<Position, Figure> board, Set<Position> availableMoves, int x, int y) {
@@ -90,9 +77,6 @@ public class Knight extends Figure {
         } else if (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
             addPositionToAvailableMoves(availableMoves, x, y);
         }
-//        if (isValidPosition(x, y) || isObstacle(board, x, y)) {
-//            addPositionToAvailableMoves(availableMoves, x, y);
-//        }
     }
 
     private void moveRightAndBack(Map<Position, Figure> board, Set<Position> availableMoves, int x, int y) {
@@ -103,9 +87,6 @@ public class Knight extends Figure {
         } else if (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
             addPositionToAvailableMoves(availableMoves, x, y);
         }
-//        if (isValidPosition(x, y) || isObstacle(board, x, y)) {
-//            addPositionToAvailableMoves(availableMoves, x, y);
-//        }
     }
 
     private void moveLeftAndStraight(Map<Position, Figure> board, Set<Position> availableMoves, int x, int y) {
@@ -116,9 +97,6 @@ public class Knight extends Figure {
         } else if (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
             addPositionToAvailableMoves(availableMoves, x, y);
         }
-//        if (isValidPosition(x, y) || isObstacle(board, x, y)) {
-//            addPositionToAvailableMoves(availableMoves, x, y);
-//        }
     }
 
     private void moveLeftAndBack(Map<Position, Figure> board, Set<Position> availableMoves, int x, int y) {
@@ -129,8 +107,5 @@ public class Knight extends Figure {
         } else if (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
             addPositionToAvailableMoves(availableMoves, x, y);
         }
-//        if (isValidPosition(x, y) || isObstacle(board, x, y)) {
-//            addPositionToAvailableMoves(availableMoves, x, y);
-//        }
     }
 }

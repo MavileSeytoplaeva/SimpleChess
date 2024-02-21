@@ -1,8 +1,8 @@
 package org.example.figures;
 
-import org.example.FigureColor;
-import org.example.FigureType;
-import org.example.Position;
+import org.example.components.FigureColor;
+import org.example.components.FigureType;
+import org.example.components.Position;
 
 import java.util.*;
 
@@ -14,8 +14,8 @@ public class King extends Figure {
     @Override
     public Set<Position> generateMoves(Map<Position, Figure> board, Set<Position> availableMoves) {
         Position initialPosition = getPosition();
-        char positionOnAsisX = initialPosition.getHorizontalPosition();
-        int positionOnAsisY = initialPosition.getVerticalPosition();
+        char positionOnAsisX = initialPosition.horizontalPosition();
+        int positionOnAsisY = initialPosition.verticalPosition();
         setPreviousPosition(initialPosition);
         moveStraight(board, availableMoves, positionOnAsisX, positionOnAsisY);
         moveBack(board, availableMoves, positionOnAsisX, positionOnAsisY);
@@ -48,10 +48,6 @@ public class King extends Figure {
         } else if (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
             addPositionToAvailableMoves(availableMoves, x, y);
         }
-//        if (isValidPosition(x, y) || (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor())) {
-//
-//            addPositionToAvailableMoves(availableMoves, x, y);
-//        }
     }
 
     @Override
@@ -63,10 +59,6 @@ public class King extends Figure {
         } else if (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
             addPositionToAvailableMoves(availableMoves, x, y);
         }
-//        if (isValidPosition(x, y) || (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor())) {
-//
-//            addPositionToAvailableMoves(availableMoves, x, y);
-//        }
     }
 
     @Override
@@ -78,10 +70,6 @@ public class King extends Figure {
         } else if (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
             addPositionToAvailableMoves(availableMoves, x, y);
         }
-//        if (isValidPosition(x, y) || (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor())) {
-//
-//            addPositionToAvailableMoves(availableMoves, x, y);
-//        }
     }
 
     @Override
@@ -92,10 +80,6 @@ public class King extends Figure {
         } else if (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
             addPositionToAvailableMoves(availableMoves, x, y);
         }
-//        if (isValidPosition(x, y) || (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor())) {
-//
-//            addPositionToAvailableMoves(availableMoves, x, y);
-//        }
     }
 
     @Override
@@ -106,9 +90,6 @@ public class King extends Figure {
         } else if (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
             addPositionToAvailableMoves(availableMoves, x, y);
         }
-//        if (isValidPosition(x, y) || isObstacle(board, x, y)) {// Проверяю, не столкнулся ли конь с другой фигурой или краем поля
-//            addPositionToAvailableMoves(availableMoves, x, y);
-//        }
     }
 
     @Override
@@ -119,10 +100,6 @@ public class King extends Figure {
         } else if (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
             addPositionToAvailableMoves(availableMoves, x, y);
         }
-//        if (isValidPosition(x, y) || (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor())) {
-//
-//            addPositionToAvailableMoves(availableMoves, x, y);
-//        }
     }
 
     @Override
@@ -133,6 +110,5 @@ public class King extends Figure {
         } else if (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
             addPositionToAvailableMoves(availableMoves, x, y);
         }
-//
     }
 }
