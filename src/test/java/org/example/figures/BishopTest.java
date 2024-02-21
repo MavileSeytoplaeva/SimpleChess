@@ -14,12 +14,12 @@ class BishopTest {
 
     @Test
     void TestAvailableMoves() {
-        computer1.putWhitePiecesOnBoard(chessBoard.getBoard());
-        computer2.putBlackPiecesOnBoard(chessBoard.getBoard());
+//        computer1.putWhitePiecesOnBoard(chessBoard.getBoard());
+//        computer2.putBlackPiecesOnBoard(chessBoard.getBoard());
         Set<Position> actualAvailableMoves = new HashSet<>();
         Bishop bishop = new Bishop(FigureType.BISHOP, FigureColor.WHITE, new Position('d', 5));
         actualAvailableMoves.addAll(bishop.generateMoves(chessBoard.getBoard(), actualAvailableMoves));
-        int expectedAvailableMovesSize = 6;
+        int expectedAvailableMovesSize = 8;
 
         Assert.assertEquals(expectedAvailableMovesSize, actualAvailableMoves.size());
     }

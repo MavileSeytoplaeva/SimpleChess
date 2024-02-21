@@ -2,6 +2,7 @@ package org.example.figures;
 
 import org.example.*;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
@@ -14,13 +15,21 @@ class KingTest {
 
     @Test
     void TestAvailableMoves() {
-        computer1.putWhitePiecesOnBoard(chessBoard.getBoard());
-        computer2.putBlackPiecesOnBoard(chessBoard.getBoard());
+//        computer1.putWhitePiecesOnBoard(chessBoard.getBoard());
+//        computer2.putBlackPiecesOnBoard(chessBoard.getBoard());
         Set<Position> actualAvailableMoves = new HashSet<>();
-        King king = new King(FigureType.KING, FigureColor.WHITE, new Position('d', 5));
+        King king = new King(FigureType.KING, FigureColor.WHITE, new Position('d', 6));
+
         actualAvailableMoves.addAll(king.generateMoves(chessBoard.getBoard(), actualAvailableMoves));
         int expectedAvailableMovesSize = 8;
 
-        Assert.assertEquals(expectedAvailableMovesSize, actualAvailableMoves.size());
+        Assertions.assertEquals(expectedAvailableMovesSize, actualAvailableMoves.size());
+        actualAvailableMoves.clear();
+
+        king.setPosition(new Position('d',3));
+        actualAvailableMoves.addAll(king.generateMoves(chessBoard.getBoard(), actualAvailableMoves));
+        int expectedAvailableMovesSize2 = 5;
+
+        Assertions.assertEquals(expectedAvailableMovesSize2, actualAvailableMoves.size());
     }
 }

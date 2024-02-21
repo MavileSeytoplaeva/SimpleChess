@@ -7,16 +7,16 @@ import org.example.Position;
 import java.util.*;
 
 public class Bishop extends Figure {
-    public Bishop(FigureType figureType, FigureColor color, Position initialPosition) {
-        super(figureType, color, initialPosition);
+    public Bishop(FigureType figureType, FigureColor color, Position position) {
+        super(figureType, color, position);
     }
 
     @Override
     public Set<Position> generateMoves(Map<Position, Figure> board, Set<Position> availableMoves) {
         Position initialPosition = getPosition();
+        setPreviousPosition(initialPosition);
         char positionOnAsisX = initialPosition.getHorizontalPosition();
         int positionOnAsisY = initialPosition.getVerticalPosition();
-        setPreviousPosition(initialPosition);
         moveRightPositiveDiagonal(board, availableMoves, positionOnAsisX, positionOnAsisY);
         moveRightNegativeDiagonal(board, availableMoves, positionOnAsisX, positionOnAsisY);
         moveLeftPositiveDiagonal(board, availableMoves, positionOnAsisX, positionOnAsisY);

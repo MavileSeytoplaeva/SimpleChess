@@ -17,20 +17,15 @@ public class Main {
         int counter = 0;
 
         // добавление белых фигур
-        computer1.putWhitePiecesOnBoard(chessBoard.getBoard());
-
-        // добавление черных фигур
-        computer2.putBlackPiecesOnBoard(chessBoard.getBoard());
+//        computer1.putWhitePiecesOnBoard(chessBoard.getBoard());
+//
+//        // добавление черных фигур
+//        computer2.putBlackPiecesOnBoard(chessBoard.getBoard());
         while (!gameOver) {
-            try {
+
                 chessBoard.setBoard(computer1.takeTurn(chessBoard.getBoard()));
                 chessBoard.setBoard(computer2.takeTurn(chessBoard.getBoard()));
-            } catch (RuntimeException e) {
-                counter++;
-                if (counter == 2) {
-                    throw new RuntimeException("Game Over");
-                }
-            }
+
         }
     }
 }

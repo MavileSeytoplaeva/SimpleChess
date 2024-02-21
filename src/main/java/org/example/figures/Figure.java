@@ -16,19 +16,38 @@ public abstract class Figure {
         this.figureType = figureType;
         this.color = color;
         this.position = position;
+        this.previousPosition = position;
     }
     public abstract Set<Position> generateMoves(Map<Position, Figure> board, Set<Position> availableMoves);
 
     public boolean shouldBreak(Map<Position, Figure> board, int x, int y) {
         return !isValidPosition(x, y) || isObstacle(board, x, y);
     }
+//    public boolean isObstacle(Map<Position, Figure> board, int x, int y, FigureColor color) {
+//        Position position = new Position((char) x, y);
+//        if (board.get(position) != null) {
+//            Figure figure = board.get(position);
+//            if (figure.getColor() == color) {
+//                return false;
+//            } else {
+//                return true;
+//            }
+//        } else {
+//            return false; // Фигура отсутствует
+//        }
+//    }
 
     public boolean isObstacle(Map<Position, Figure> board, int x, int y) {
         Position position = new Position((char) x, y);
+        return board.get(position) != null;
+    }
+    public Figure obstacle(Map<Position, Figure> board, int x, int y) {
+        Position position = new Position((char) x, y);
         if (board.get(position) != null) {
-            return true; // Фигура присутствует
+            Figure figure = board.get(position);
+            return figure;
         } else {
-            return false; // Фигура отсутствует
+            return null;
         }
     }
 
@@ -44,7 +63,14 @@ public abstract class Figure {
         while (true) {
             y++; //  Перемещение по правой положительной диагонали
             x++;
-            if (!shouldBreak(board, x, y)) {
+            if (isValidPosition(x, y)) {
+                if (isObstacle(board, x, y)) {
+                    if (obstacle(board, x, y).getColor() != getColor()) {
+                        addPositionToAvailableMoves(availableMoves, x, y);
+                        break;
+                    }
+                    break;
+                }
                 addPositionToAvailableMoves(availableMoves, x, y);
             } else {
                 break;
@@ -56,7 +82,14 @@ public abstract class Figure {
         while (true) {
             y--; // Перемещение по правой отрицательной диагонали
             x++;
-            if (!shouldBreak(board, x, y)) {
+            if (isValidPosition(x, y)) {
+                if (isObstacle(board, x, y)) {
+                    if (obstacle(board, x, y).getColor() != getColor()) {
+                        addPositionToAvailableMoves(availableMoves, x, y);
+                        break;
+                    }
+                    break;
+                }
                 addPositionToAvailableMoves(availableMoves, x, y);
             } else {
                 break;
@@ -68,7 +101,14 @@ public abstract class Figure {
         while (true) {
             y++; // Перемещение по левой положительной диагонали
             x--;
-            if (!shouldBreak(board, x, y)) {
+            if (isValidPosition(x, y)) {
+                if (isObstacle(board, x, y)) {
+                    if (obstacle(board, x, y).getColor() != getColor()) {
+                        addPositionToAvailableMoves(availableMoves, x, y);
+                        break;
+                    }
+                    break;
+                }
                 addPositionToAvailableMoves(availableMoves, x, y);
             } else {
                 break;
@@ -80,7 +120,14 @@ public abstract class Figure {
         while (true) {
             y--; // Перемещение по левой отрицательной диагонали
             x--;
-            if (!shouldBreak(board, x, y)) {
+            if (isValidPosition(x, y)) {
+                if (isObstacle(board, x, y)) {
+                    if (obstacle(board, x, y).getColor() != getColor()) {
+                        addPositionToAvailableMoves(availableMoves, x, y);
+                        break;
+                    }
+                    break;
+                }
                 addPositionToAvailableMoves(availableMoves, x, y);
             } else {
                 break;
@@ -91,7 +138,14 @@ public abstract class Figure {
     public void moveStraight(Map<Position, Figure> board, Set<Position> availableMoves, int x, int y) {
         while (true) {
             y++; // Перемещение прямо
-            if (!shouldBreak(board, x, y)) {
+            if (isValidPosition(x, y)) {
+                if (isObstacle(board, x, y)) {
+                    if (obstacle(board, x, y).getColor() != getColor()) {
+                        addPositionToAvailableMoves(availableMoves, x, y);
+                        break;
+                    }
+                    break;
+                }
                 addPositionToAvailableMoves(availableMoves, x, y);
             } else {
                 break;
@@ -102,7 +156,14 @@ public abstract class Figure {
     public void moveBack(Map<Position, Figure> board, Set<Position> availableMoves, int x, int y) {
         while (true) {
             y--; // Перемещение назад
-            if (!shouldBreak(board, x, y)) {
+            if (isValidPosition(x, y)) {
+                if (isObstacle(board, x, y)) {
+                    if (obstacle(board, x, y).getColor() != getColor()) {
+                        addPositionToAvailableMoves(availableMoves, x, y);
+                        break;
+                    }
+                    break;
+                }
                 addPositionToAvailableMoves(availableMoves, x, y);
             } else {
                 break;
@@ -113,7 +174,14 @@ public abstract class Figure {
     public void moveLeft(Map<Position, Figure> board, Set<Position> availableMoves, int x, int y) {
         while (true) {
             x--; // Перемещение влево
-            if (!shouldBreak(board, x, y)) {
+            if (isValidPosition(x, y)) {
+                if (isObstacle(board, x, y)) {
+                    if (obstacle(board, x, y).getColor() != getColor()) {
+                        addPositionToAvailableMoves(availableMoves, x, y);
+                        break;
+                    }
+                    break;
+                }
                 addPositionToAvailableMoves(availableMoves, x, y);
             } else {
                 break;
@@ -124,7 +192,10 @@ public abstract class Figure {
     public void moveRight(Map<Position, Figure> board, Set<Position> availableMoves, int x, int y) {
         while (true) {
             x++; // Перемещение направо
-            if (!shouldBreak(board, x, y)) {
+            if (isValidPosition(x, y)) {
+                if (isObstacle(board, x, y)) {
+                    break;
+                }
                 addPositionToAvailableMoves(availableMoves, x, y);
             } else {
                 break;
@@ -154,5 +225,15 @@ public abstract class Figure {
 
     public void setPreviousPosition(Position previousPosition) {
         this.previousPosition = previousPosition;
+    }
+
+    @Override
+    public String toString() {
+        return "Figure{" +
+                "figureType=" + figureType +
+                ", color=" + color +
+                ", position=" + position +
+                ", previousPosition=" + previousPosition +
+                '}';
     }
 }

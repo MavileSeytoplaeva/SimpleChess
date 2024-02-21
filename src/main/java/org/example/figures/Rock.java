@@ -8,9 +8,10 @@ import java.util.*;
 
 public class Rock extends Figure {
 
-    public Rock(FigureType figureType, FigureColor color, Position initialPosition) {
-        super(figureType, color, initialPosition);
+    public Rock(FigureType figureType, FigureColor color, Position position) {
+        super(figureType, color, position);
     }
+
     @Override
     public Set<Position> generateMoves(Map<Position, Figure> board, Set<Position> availableMoves) {
         Position initialPosition = getPosition();

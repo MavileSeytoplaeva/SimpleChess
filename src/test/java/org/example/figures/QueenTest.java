@@ -16,12 +16,12 @@ class QueenTest {
     @Test
     void TestAvailableMovesWhitePawn() {
         Set<Position> actualAvailableMoves = new HashSet<>();
-        computer1.putWhitePiecesOnBoard(chessBoard.getBoard());
-        computer2.putBlackPiecesOnBoard(chessBoard.getBoard());
+//        computer1.putWhitePiecesOnBoard(chessBoard.getBoard());
+//        computer2.putBlackPiecesOnBoard(chessBoard.getBoard());
         Queen queen = new Queen(FigureType.QUEEN, FigureColor.WHITE, new Position('d', 5));
         actualAvailableMoves.addAll(queen.generateMoves(chessBoard.getBoard(), actualAvailableMoves));
 
-        int expectedAvailableMovesSize = 16;
+        int expectedAvailableMovesSize = 19;
 
         Assert.assertEquals(expectedAvailableMovesSize, actualAvailableMoves.size());
     }

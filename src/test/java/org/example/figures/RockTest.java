@@ -16,12 +16,12 @@ class RockTest {
     @Test
     void TestAvailableMovesWhitePawn() {
         Set<Position> actualAvailableMoves = new HashSet<>();
-        computer1.putWhitePiecesOnBoard(chessBoard.getBoard());
-        computer2.putBlackPiecesOnBoard(chessBoard.getBoard());
+//        computer1.putWhitePiecesOnBoard(chessBoard.getBoard());
+//        computer2.putBlackPiecesOnBoard(chessBoard.getBoard());
         Rock rock = new Rock(FigureType.ROCK, FigureColor.WHITE, new Position('d', 5));
         actualAvailableMoves.addAll(rock.generateMoves(chessBoard.getBoard(), actualAvailableMoves));
 
-        int expectedAvailableMovesSize = 10;
+        int expectedAvailableMovesSize = 11;
 
         Assert.assertEquals(expectedAvailableMovesSize, actualAvailableMoves.size());
     }

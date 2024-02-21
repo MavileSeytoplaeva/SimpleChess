@@ -7,8 +7,8 @@ import org.example.Position;
 import java.util.*;
 
 public class Pawn extends Figure {
-    public Pawn(FigureType figureType, FigureColor color, Position initialPosition) {
-        super(figureType, color, initialPosition);
+    public Pawn(FigureType figureType, FigureColor color, Position position) {
+        super(figureType, color, position);
     }
 
     @Override
@@ -20,14 +20,18 @@ public class Pawn extends Figure {
         if (board.get(initialPosition).getColor() == FigureColor.WHITE) {
             if (getPosition().getVerticalPosition() == 2) {
                 firstWhitePawnMove(board, availableMoves, positionOnAsisX, positionOnAsisY);
+                whitePawnHackMoves(board, availableMoves, positionOnAsisX, positionOnAsisY);
             } else {
                 moveWhiteStraightPawn(board, availableMoves, positionOnAsisX, positionOnAsisY);
+                whitePawnHackMoves(board, availableMoves, positionOnAsisX, positionOnAsisY);
             }
         } else {
             if (getPosition().getVerticalPosition() == 7) {
                 firstBlackPawnMove(board, availableMoves, positionOnAsisX, positionOnAsisY);
+                blackPawnHackMoves(board, availableMoves, positionOnAsisX, positionOnAsisY);
             } else {
                 moveBlackStraightPawn(board, availableMoves, positionOnAsisX, positionOnAsisY);
+                blackPawnHackMoves(board, availableMoves, positionOnAsisX, positionOnAsisY);
             }
         }
         return availableMoves;
@@ -59,6 +63,55 @@ public class Pawn extends Figure {
                 break;
             }
         }
+    }
+
+    private void blackPawnHackMoves(Map<Position, Figure> board, Set<Position> availableMoves, int x, int y) {
+        y--;
+        x--;
+        if (isValidPosition(x, y) && isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
+
+//            if (isObstacle(board, x, y)) {
+//                if (obstacle(board, x, y).getColor() != getColor()) {
+//                    addPositionToAvailableMoves(availableMoves, x, y);
+//                }
+//            }
+            addPositionToAvailableMoves(availableMoves, x, y);
+        }
+        x += 2;
+        if (isValidPosition(x, y) && isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
+//        if (isValidPosition(x, y)) {
+//            if (isObstacle(board, x, y)) {
+//                if (obstacle(board, x, y).getColor() != getColor()) {
+//                    addPositionToAvailableMoves(availableMoves, x, y);
+//                }
+//            }
+            addPositionToAvailableMoves(availableMoves, x, y);
+        }
+    }
+
+    private void whitePawnHackMoves(Map<Position, Figure> board, Set<Position> availableMoves, int x, int y) {
+        y++;
+        x--;
+        if (isValidPosition(x, y) && isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
+//        if (isValidPosition(x, y)) {
+//            if (isObstacle(board, x, y)) {
+//                if (obstacle(board, x, y).getColor() != getColor()) {
+//                    addPositionToAvailableMoves(availableMoves, x, y);
+//                }
+//            }
+            addPositionToAvailableMoves(availableMoves, x, y);
+        }
+        x += 2;
+        if (isValidPosition(x, y) && isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
+//        if (isValidPosition(x, y)) {
+//            if (isObstacle(board, x, y)) {
+//                if (obstacle(board, x, y).getColor() != getColor()) {
+//                    addPositionToAvailableMoves(availableMoves, x, y);
+//                }
+//            }
+            addPositionToAvailableMoves(availableMoves, x, y);
+        }
+
     }
 
     private void moveBlackStraightPawn(Map<Position, Figure> board, Set<Position> availableMoves, int x, int y) {

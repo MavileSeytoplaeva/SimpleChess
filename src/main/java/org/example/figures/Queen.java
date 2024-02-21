@@ -8,9 +8,10 @@ import java.util.Map;
 import java.util.Set;
 
 public class Queen extends Figure {
-    public Queen(FigureType figureType, FigureColor color, Position initialPosition) {
-        super(figureType, color, initialPosition);
+    public Queen(FigureType figureType, FigureColor color, Position position) {
+        super(figureType, color, position);
     }
+
 
     @Override
     public Set<Position> generateMoves(Map<Position, Figure> board, Set<Position> availableMoves) {
