@@ -13,14 +13,9 @@ public class Bishop extends Figure {
 
     @Override
     public Set<Position> generateMoves(Map<Position, Figure> board, Set<Position> availableMoves) {
-        Position initialPosition = getPosition();
-        setPreviousPosition(initialPosition);
-        char positionOnAsisX = initialPosition.horizontalPosition();
-        int positionOnAsisY = initialPosition.verticalPosition();
-        moveRightPositiveDiagonal(board, availableMoves, positionOnAsisX, positionOnAsisY);
-        moveRightNegativeDiagonal(board, availableMoves, positionOnAsisX, positionOnAsisY);
-        moveLeftPositiveDiagonal(board, availableMoves, positionOnAsisX, positionOnAsisY);
-        moveLeftNegativeDiagonal(board, availableMoves, positionOnAsisX, positionOnAsisY);
+        Position position = getPosition();
+        setPreviousPosition(position);
+        generatePossiblePositions(board, availableMoves, position);
         return availableMoves;
     }
 }

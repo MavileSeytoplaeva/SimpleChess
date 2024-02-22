@@ -14,14 +14,10 @@ import java.util.Set;
 class KnightTest {
 
     ChessBoard chessBoard = new ChessBoard();
-    Computer1 computer1 = new Computer1();
-    Computer2 computer2 = new Computer2();
 
     @Test
 
     void TestAvailableMoves() {
-//        computer1.putWhitePiecesOnBoard(chessBoard.getBoard());
-//        computer2.putBlackPiecesOnBoard(chessBoard.getBoard());
         Set<Position> actualAvailableMoves = new HashSet<>();
         Knight knight = new Knight(FigureType.KNIGHT, FigureColor.WHITE, new Position('d', 5));
         actualAvailableMoves.addAll(knight.generateMoves(chessBoard.getBoard(), actualAvailableMoves));
@@ -42,6 +38,13 @@ class KnightTest {
         int expectedAvailableMovesSize3 = 6;
 
         Assertions.assertEquals(expectedAvailableMovesSize3, actualAvailableMoves.size());
+        actualAvailableMoves.clear();
+
+        knight.setPosition(new Position('b', 1));
+        actualAvailableMoves.addAll(knight.generateMoves(chessBoard.getBoard(), actualAvailableMoves));
+        int expectedAvailableMovesSize4 = 2;
+
+        Assertions.assertEquals(expectedAvailableMovesSize4, actualAvailableMoves.size());
     }
 
 }
