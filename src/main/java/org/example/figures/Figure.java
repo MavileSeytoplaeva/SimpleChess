@@ -21,88 +21,23 @@ public abstract class Figure {
     }
     public abstract Set<Position> generateMoves(Map<Position, Figure> board, Set<Position> availableMoves);
 
-    public void generatePossiblePositions(Map<Position, Figure> board, Set<Position> availableMoves, Position position) {
-        setPossiblePositions(board, position);
-        List<Position> possiblePositions = getPossiblePositions();
-        possiblePositions.forEach(position1 -> {
-            int x = position1.horizontalPosition();
-            int y = position1.verticalPosition();
+    public abstract void generatePossiblePositions(Map<Position, Figure> board, Set<Position> availableMoves, Position position);
 
-            addPositionToAvailableMoves(availableMoves, x, y);
-        });
-        availableMoves.remove(position);
-        possiblePositions.clear();
-    }
-    public void setPossiblePositions(Map<Position, Figure> board, Position position) {
-        if (getFigureType() == FigureType.QUEEN) {
-            addPossibleRookPositions(board, position); // Queen has rook-like movements
-            addPossibleBishopPositions(board, position); // Queen also has bishop-like movements
-        } else if (getFigureType() == FigureType.ROCK) {
-            addPossibleRookPositions(board, position); // Rook has only rook-like movements
-        } else if (getFigureType() == FigureType.BISHOP) {
-            addPossibleBishopPositions(board, position); // Bishop has only bishop-like movements
-        } else if (getFigureType() == FigureType.PAWN) {
-            setPossiblePawnPositions(position);
-        } else if (getFigureType() == FigureType.KNIGHT) {
-            setPossibleKnightPositions(position);
-        }
-    }
-    public void setPossibleKnightPositions(Position position) {
+    public void addPossiblePositions(Map<Position, Figure> board, Position position, int horizontalIncrement, int verticalIncrement) {
         int x = position.horizontalPosition();
         int y = position.verticalPosition();
-        for (int i = -1; i <= 1; i += 2) {
-            Position possiblePosition = new Position((char) (x + i), (y + 2));
-            possiblePositions.add(possiblePosition);
-            Position possiblePosition2 = new Position((char) (x + i), (y - 2));
-            possiblePositions.add(possiblePosition2);
-            Position possiblePosition3 = new Position((char) (x + 2), (y + i));
-            possiblePositions.add(possiblePosition3);
-            Position possiblePosition4 = new Position((char) (x - 2), (y + i));
-            possiblePositions.add(possiblePosition4);
-        }
-    }
 
-    private void addPossibleRookPositions(Map<Position, Figure> board, Position position) {
-        addPossiblePositions(board, position, 1, 0); // Rook-like movement
-        addPossiblePositions(board, position, -1, 0);
-        addPossiblePositions(board, position, 0, 1);
-        addPossiblePositions(board, position, 0, -1);
-    }
-
-    private void addPossibleBishopPositions(Map<Position, Figure> board, Position position) {
-        addPossiblePositions(board, position, 1, 1); // Bishop-like movement
-        addPossiblePositions(board, position, -1, -1);
-        addPossiblePositions(board, position, 1, -1);
-        addPossiblePositions(board, position, -1, 1);
-    }
-
-    public void setPossiblePawnPositions(Position position) {
-        int x = position.horizontalPosition();
-        int y = position.verticalPosition();
-        if (getColor() == FigureColor.WHITE) {
-            if (y == 2) {
-                for (int i = 1; i <= 2; i++) {
-                    Position position1 = new Position((char) x, (y + i));
-                    possiblePositions.add(position1);
+        while (isValidPosition(x + horizontalIncrement, y + verticalIncrement)) {
+            x += horizontalIncrement;
+            y += verticalIncrement;
+            if (isObstacle(board, x, y)) {
+                Figure obstacle = obstacle(board, x, y);
+                if (obstacle.getColor() != getColor()) {
+                    addPossiblePosition(new Position((char) x, y));
                 }
-            } else {
-                for (int i = -1, j = 1; i <= 1; i++) {
-                    Position position1 = new Position((char) (x + i), (y + j));
-                    possiblePositions.add(position1);
-                }
+                break;
             }
-        } else if (getColor() == FigureColor.BLACK) {
-            if (y == 7) {
-                for (int i = 1; i <= 2; i++) {
-                    Position position1 = new Position((char) x, (y - i));
-                    possiblePositions.add(position1);
-                }
-            } else {
-                for (int i = -1, j = 1; i <= 1; i++) {
-                    Position position1 = new Position((char) (x + i), (y - j));
-                    possiblePositions.add(position1);
-                }
-            }
+            addPossiblePosition(new Position((char) x, y));
         }
     }
 
@@ -133,37 +68,12 @@ public abstract class Figure {
     public void checkIfValidOrObstacles(Map<Position, Figure> board, Set<Position> availableMoves, int x, int y) {
         if (isValidPosition(x, y) && !isObstacle(board, x, y)) {
             addPositionToAvailableMoves(availableMoves, x, y);
-        } else if (isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
+        } else if (isValidPosition(x, y) && isObstacle(board, x, y) && obstacle(board, x, y).getColor() != getColor()) {
             addPositionToAvailableMoves(availableMoves, x, y);
         }
     }
-    public void setPossibleKingPositions(Position position) {
-        int x = position.horizontalPosition();
-        int y = position.verticalPosition();
-        for (int i = -1; i <= 1; i++) {
-            Position possiblePosition = new Position((char) x, y + i);
-            possiblePositions.add(possiblePosition);
-        }
-    }
-    private void addPossiblePositions(Map<Position, Figure> board, Position position, int horizontalIncrement, int verticalIncrement) {
-
-        int x = position.horizontalPosition();
-        int y = position.verticalPosition();
-
-        while (isValidPosition(x + horizontalIncrement, y + verticalIncrement)) {
-            x += horizontalIncrement;
-            y += verticalIncrement;
-
-            if (isObstacle(board, x, y)) {
-                Figure obstacle = obstacle(board, x, y);
-                if (obstacle.getColor() != getColor()) {
-                    possiblePositions.add(new Position((char) x, y));
-                }
-                break;
-            }
-
-            possiblePositions.add(new Position((char) x, y));
-        }
+    public void addPossiblePosition(Position position) {
+        possiblePositions.add(position);
     }
 
     public List<Position> getPossiblePositions() {

@@ -12,6 +12,7 @@ public abstract class Player {
     private final Random random = new Random();
     private List<Figure> figures = new ArrayList<>();
     private Set<Position> availableMoves = new HashSet<>();
+    private boolean gameOver = false;
 
 
     public Map<Position, Figure> takeTurn(Map<Position, Figure> board) {
@@ -20,9 +21,6 @@ public abstract class Player {
         Figure chosenFigure = chooseAFigure(board);
         setAvailableMoves(generateMoves(board, availableMoves, chosenFigure));
         while (getAvailableMoves().isEmpty()) {
-            if (figuresSize() <= 8) {
-                checkIfOnlyPawnsLeft();
-            }
             chosenFigure = chooseAFigure(board);
             setAvailableMoves(generateMoves(board, getAvailableMoves(), chosenFigure));
         }
@@ -39,12 +37,12 @@ public abstract class Player {
             board.put(chosenMove, chosenFigure);
             Figure figure = board.get(chosenMove);
             if (figure.getFigureType() == FigureType.KING) {
-                throw new KingIsHackedException("King is hacked");
+                setGameOver(true);
             }
         }
         clearFigures();
         clearAvailableMoves();
-        System.out.println(chosenFigure.getFigureType() + " " + chosenFigure.getColor() + " " + "previous position" + chosenFigure.getPreviousPosition() + " New position" + chosenFigure.getPosition());
+        System.out.println(chosenFigure.getFigureType() + " " + chosenFigure.getColor() + " " + chosenFigure.getPosition().horizontalPosition() + chosenFigure.getPosition().verticalPosition());
         return board;
     }
 
@@ -61,18 +59,6 @@ public abstract class Player {
     private Position chooseMove() {
         return getAvailableMoves().stream()
                 .findAny().get();
-    }
-
-    private void checkIfOnlyPawnsLeft() {
-        List<Figure> pawns = new ArrayList<>();
-        getFigures().forEach(figure -> {
-            if (figure.getFigureType() == FigureType.PAWN) {
-                pawns.add(figure);
-            }
-        });
-        if (figuresSize() == pawns.size()) {
-            throw new NoMoreMovesException("Only pawns left - no more moves");
-        }
     }
 
     public abstract void addToFigures(Figure figure);
@@ -93,5 +79,13 @@ public abstract class Player {
 
     private void setAvailableMoves(Set<Position> availableMoves) {
         this.availableMoves = availableMoves;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
     }
 }

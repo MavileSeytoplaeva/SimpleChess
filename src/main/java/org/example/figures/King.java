@@ -34,4 +34,12 @@ public class King extends Figure {
         availableMoves.remove(position);
         possiblePositions.clear();
     }
+    private void setPossibleKingPositions(Position position) {
+        int x = position.horizontalPosition();
+        int y = position.verticalPosition();
+        for (int i = -1; i <= 1; i++) {
+            Position possiblePosition = new Position((char) x, y + i);
+            addPossiblePosition(possiblePosition);
+        }
+    }
 }

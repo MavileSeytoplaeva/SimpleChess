@@ -30,4 +30,18 @@ public class Knight extends Figure {
         availableMoves.remove(position);
         possiblePositions.clear();
     }
+    private void setPossibleKnightPositions(Position position) {
+        int x = position.horizontalPosition();
+        int y = position.verticalPosition();
+        for (int i = -1; i <= 1; i += 2) {
+            Position possiblePosition = new Position((char) (x + i), (y + 2));
+            addPossiblePosition(possiblePosition);
+            Position possiblePosition2 = new Position((char) (x + i), (y - 2));
+            addPossiblePosition(possiblePosition2);
+            Position possiblePosition3 = new Position((char) (x + 2), (y + i));
+            addPossiblePosition(possiblePosition3);
+            Position possiblePosition4 = new Position((char) (x - 2), (y + i));
+            addPossiblePosition(possiblePosition4);
+        }
+    }
 }

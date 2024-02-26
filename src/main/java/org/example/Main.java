@@ -14,10 +14,16 @@ public class Main {
         Computer2 computer2 = new Computer2();
         ChessBoard chessBoard = new ChessBoard();
 
-        while (true) {
+
+        while (!computer1.isGameOver() && !computer2.isGameOver()) {
             chessBoard.setBoard(computer1.takeTurn(chessBoard.getBoard()));
             chessBoard.setBoard(computer2.takeTurn(chessBoard.getBoard()));
-
+            if (computer1.isGameOver()) {
+                System.out.println("Computer 2 with white figures wins");
+            }
+            if (computer2.isGameOver()) {
+                System.out.println("Computer 1 with black figures wins");
+            }
         }
     }
 }

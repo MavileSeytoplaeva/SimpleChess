@@ -133,5 +133,59 @@ class PawnTest {
         actualAvailableMoves.clear();
     }
 
+    @Test
+    void testNoValidPositionWhitePawn() {
+        Set<Position> actualAvailableMoves = new HashSet<>();
+        Pawn pawn = new Pawn(FigureType.PAWN, FigureColor.WHITE, new Position('a', 1));
+        actualAvailableMoves.addAll(pawn.generateMoves(chessBoard.getBoard(), actualAvailableMoves));
+        int expectedAvailableMovesSize = 0;
+
+        Assertions.assertEquals(expectedAvailableMovesSize, actualAvailableMoves.size());
+    }
+
+    @Test
+    void testNoValidPositionBlackPawn() {
+        Set<Position> actualAvailableMoves = new HashSet<>();
+        Pawn pawn = new Pawn(FigureType.PAWN, FigureColor.BLACK, new Position('a', 8));
+        actualAvailableMoves.addAll(pawn.generateMoves(chessBoard.getBoard(), actualAvailableMoves));
+        int expectedAvailableMovesSize = 0;
+
+        Assertions.assertEquals(expectedAvailableMovesSize, actualAvailableMoves.size());
+    }
+
+    @Test
+    void testSimpleOneMoveBlackPawn() {
+        Set<Position> actualAvailableMoves = new HashSet<>();
+        Pawn pawn = new Pawn(FigureType.PAWN, FigureColor.BLACK, new Position('b', 5));
+        actualAvailableMoves.addAll(pawn.generateMoves(chessBoard.getBoard(), actualAvailableMoves));
+        int expectedAvailableMovesSize = 1;
+
+        Assertions.assertEquals(expectedAvailableMovesSize, actualAvailableMoves.size());
+    }
+
+    @Test
+    void testSimpleOneMoveWhitePawn() {
+        Set<Position> actualAvailableMoves = new HashSet<>();
+        Pawn pawn = new Pawn(FigureType.PAWN, FigureColor.WHITE, new Position('h', 3));
+        actualAvailableMoves.addAll(pawn.generateMoves(chessBoard.getBoard(), actualAvailableMoves));
+        int expectedAvailableMovesSize = 1;
+
+        Assertions.assertEquals(expectedAvailableMovesSize, actualAvailableMoves.size());
+    }
+
+    @Test
+    void testBlackPawnFirstMove() {
+        Set<Position> actualAvailableMoves = new HashSet<>();
+        Pawn pawn = new Pawn(FigureType.PAWN, FigureColor.BLACK, new Position('e', 7));
+        King king = new King(FigureType.KING, FigureColor.BLACK, new Position('e', 6));
+
+        chessBoard.addFigureToBoard(pawn.getPosition(), pawn);
+        chessBoard.addFigureToBoard(king.getPosition(), king);
+        actualAvailableMoves.addAll(pawn.generateMoves(chessBoard.getBoard(), actualAvailableMoves));
+        int expectedAvailableMovesSize = 0;
+
+        Assertions.assertEquals(expectedAvailableMovesSize, actualAvailableMoves.size());
+    }
+
 
 }

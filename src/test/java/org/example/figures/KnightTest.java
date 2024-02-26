@@ -16,7 +16,6 @@ class KnightTest {
     ChessBoard chessBoard = new ChessBoard();
 
     @Test
-
     void TestAvailableMoves() {
         Set<Position> actualAvailableMoves = new HashSet<>();
         Knight knight = new Knight(FigureType.KNIGHT, FigureColor.WHITE, new Position('d', 5));
@@ -45,6 +44,21 @@ class KnightTest {
         int expectedAvailableMovesSize4 = 2;
 
         Assertions.assertEquals(expectedAvailableMovesSize4, actualAvailableMoves.size());
+    }
+
+    @Test
+    void TestKingMovesOnSameColor() {
+        Set<Position> actualAvailableMoves = new HashSet<>();
+        Knight knight = new Knight(FigureType.KNIGHT, FigureColor.WHITE, new Position('b', 1));
+        Pawn pawn = new Pawn(FigureType.PAWN, FigureColor.WHITE, new Position('c', 3));
+
+        chessBoard.addFigureToBoard(knight.getPosition(), knight);
+        chessBoard.addFigureToBoard(pawn.getPosition(), pawn);
+
+        actualAvailableMoves.addAll(knight.generateMoves(chessBoard.getBoard(), actualAvailableMoves));
+        int expectedAvailableMovesSize = 1;
+
+        Assertions.assertEquals(expectedAvailableMovesSize, actualAvailableMoves.size());
     }
 
 }
