@@ -9,6 +9,7 @@ import org.example.figures.*;
 import java.util.*;
 
 public abstract class Player {
+    private final List<Figure> figuresForPawnsChange = new ArrayList<>();
     private final Random random = new Random();
     private List<Figure> figures = new ArrayList<>();
     private Set<Position> availableMoves = new HashSet<>();
@@ -31,19 +32,32 @@ public abstract class Player {
             board.put(chosenMove, chosenFigure);
             chosenFigure.setPosition(chosenMove);
         } else {
-            Position previousPosition = chosenFigure.getPosition();
-            board.put(previousPosition, null);
-            chosenFigure.setPosition(chosenMove);
-            board.put(chosenMove, chosenFigure);
             Figure figure = board.get(chosenMove);
             if (figure.getFigureType() == FigureType.KING) {
                 setGameOver(true);
             }
+            Position previousPosition = chosenFigure.getPosition();
+            board.put(previousPosition, null);
+            chosenFigure.setPosition(chosenMove);
+            board.put(chosenMove, chosenFigure);
+        }
+        if (chosenFigure.getFigureType() == FigureType.PAWN
+                && (chosenFigure.getPosition().verticalPosition() == 8 || chosenFigure.getPosition().verticalPosition() == 1)) {
+           Figure additionalFigure = changePawnToAnotherFigure(chosenFigure);
+            System.out.println(chosenFigure.getFigureType() +" "+ chosenFigure.getColor() + " pawn is now " + additionalFigure + "on position " + additionalFigure.getPosition());
+           board.put(additionalFigure.getPosition(), additionalFigure);
+
         }
         clearFigures();
         clearAvailableMoves();
         System.out.println(chosenFigure.getFigureType() + " " + chosenFigure.getColor() + " " + chosenFigure.getPosition().horizontalPosition() + chosenFigure.getPosition().verticalPosition());
         return board;
+    }
+
+    public Figure changePawnToAnotherFigure(Figure chosenFigure) {
+            Figure additionalFigure = getFiguresForPawnsChange().get(random.nextInt(getFiguresForPawnsChange().size()));
+            additionalFigure.setPosition(chosenFigure.getPosition());
+            return additionalFigure;
     }
 
     protected abstract void getFiguresFromBoard(Map<Position, Figure> board);
@@ -52,7 +66,7 @@ public abstract class Player {
         return getFigures().get(random.nextInt(figuresSize()));
     }
 
-    protected Set<Position> generateMoves(Map<Position, Figure> board, Set<Position> availableMoves, Figure figure){
+    protected Set<Position> generateMoves(Map<Position, Figure> board, Set<Position> availableMoves, Figure figure) {
         return figure.generateMoves(board, availableMoves);
     }
 
@@ -88,4 +102,9 @@ public abstract class Player {
     public void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
     }
+
+    public abstract void setFiguresForPawnsChange();
+
+    public abstract List<Figure> getFiguresForPawnsChange();
+
 }
