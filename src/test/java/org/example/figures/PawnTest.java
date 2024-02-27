@@ -187,5 +187,19 @@ class PawnTest {
         Assertions.assertEquals(expectedAvailableMovesSize, actualAvailableMoves.size());
     }
 
+    @Test
+    void testWhitePawnFirstMove() {
+        Set<Position> actualAvailableMoves = new HashSet<>();
+        Pawn pawn = new Pawn(FigureType.PAWN, FigureColor.WHITE, new Position('b', 2));
+        King king = new King(FigureType.KING, FigureColor.WHITE, new Position('c', 3));
+
+        chessBoard.addFigureToBoard(pawn.getPosition(), pawn);
+        chessBoard.addFigureToBoard(king.getPosition(), king);
+        actualAvailableMoves.addAll(pawn.generateMoves(chessBoard.getBoard(), actualAvailableMoves));
+        int expectedAvailableMovesSize = 2;
+
+        Assertions.assertEquals(expectedAvailableMovesSize, actualAvailableMoves.size());
+    }
+
 
 }

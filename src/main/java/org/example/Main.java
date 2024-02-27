@@ -1,5 +1,8 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // Упрощенный вариант шахмат
 //Стандартное шахматное поле.
 //Играют два компьютера
@@ -13,16 +16,22 @@ public class Main {
         Computer1 computer1 = new Computer1();
         Computer2 computer2 = new Computer2();
         ChessBoard chessBoard = new ChessBoard();
+        List<Player> players = new ArrayList<>();
+        players.add(computer1);
+        players.add(computer2);
 
 
         while (!computer1.isGameOver() && !computer2.isGameOver()) {
-            chessBoard.setBoard(computer1.takeTurn(chessBoard.getBoard()));
-            chessBoard.setBoard(computer2.takeTurn(chessBoard.getBoard()));
-            if (computer1.isGameOver()) {
-                System.out.println("Computer 2 with white figures wins");
-            }
-            if (computer2.isGameOver()) {
-                System.out.println("Computer 1 with black figures wins");
+            for (Player player : players) {
+                chessBoard.setBoard(player.takeTurn(chessBoard.getBoard()));
+                if (computer1.isGameOver()) {
+                    System.out.println("Computer 2 with white figures wins");
+                    break;
+                }
+                if (computer2.isGameOver()) {
+                    System.out.println("Computer 1 with black figures wins");
+                    break;
+                }
             }
         }
     }

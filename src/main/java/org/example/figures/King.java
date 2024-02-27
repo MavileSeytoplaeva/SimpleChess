@@ -18,28 +18,36 @@ public class King extends Figure {
         generatePossiblePositions(board, availableMoves, position);
         return availableMoves;
     }
+
     @Override
     public void generatePossiblePositions(Map<Position, Figure> board, Set<Position> availableMoves, Position position) {
         setPossibleKingPositions(position);
         List<Position> possiblePositions = getPossiblePositions();
         possiblePositions
                 .forEach(position1 -> {
-                    for (int i = -1; i <= 1; i++) {
-                        int x = position1.horizontalPosition();
-                        int y = position1.verticalPosition();
-                        x += i;
-                        checkIfValidOrObstacles(board, availableMoves, x, y);
-                    }
+                    checkIfValidOrObstacles(board, availableMoves, position1.horizontalPosition(), position1.verticalPosition());
                 });
         availableMoves.remove(position);
         possiblePositions.clear();
     }
+
     private void setPossibleKingPositions(Position position) {
+        List<Position> newPositions = new ArrayList<>();
         int x = position.horizontalPosition();
         int y = position.verticalPosition();
         for (int i = -1; i <= 1; i++) {
             Position possiblePosition = new Position((char) x, y + i);
             addPossiblePosition(possiblePosition);
         }
+        Iterator<Position> iterator = getPossiblePositions().iterator();
+        while (iterator.hasNext()) {
+            Position position1 = iterator.next();
+            for (int i = -1; i <= 1; i++) {
+                int x1 = position1.horizontalPosition();
+                int y1 = position1.verticalPosition();
+                newPositions.add(new Position((char) (x1 + i), y1));
+            }
+        }
+        getPossiblePositions().addAll(newPositions);
     }
 }
